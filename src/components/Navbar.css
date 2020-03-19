@@ -1,0 +1,18 @@
+.cursor-pointer{
+  cursor: pointer;    
+}
+.navbar{
+  margin-bottom: 50px;
+}
+
+header{
+  margin-bottom: 5em;
+}
+
+.container{
+  padding-bottom: 7em;
+}
+
+.green {
+  background-color: #147919 !important;
+}
