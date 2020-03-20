@@ -7,8 +7,6 @@ import './Navbar.css'
 const Navbar = () => {
   const [home, setHome] = useState('nav-item active')
 
-  const [seguimentos, setSeguimentos] = useState('nav-item')
-
   const [servicos, setServicos] = useState('nav-item')
   const [relatorios, setRelatorios] = useState('nav-item')
   const [usuarios, setUsuarios] = useState('nav-item')

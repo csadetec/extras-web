@@ -1,10 +1,16 @@
 import React from 'react'
 
-function Alert(props) {
+function Alert({ msg = false, color = 'info' }) {
+  //let color 
   return (
-    <div className="alert alert-info mt-2 col-md-12 mb-2" role="alert">
-      {props.msg}
-    </div>      
+    <>
+      {msg &&
+        <div className={`alert alert-${color}  col-md-12 mb-0 mt-1`} role="alert">
+          {msg}
+        </div>
+      }
+    </>
+
   )
 }
 

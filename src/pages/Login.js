@@ -3,27 +3,29 @@ import api from '../service/api'
 
 
 function Login() {
-  const [email, setEmail] = useState('teste@gmail.com')
-  const [password, setPassword] = useState('teste')
+  const [loggin, setLoggin] = useState({
+    'email':'teste@gmail.com',
+    'password':'teste'
+  })
   const [alert, setAlert] = useState(false)
   const [btnLabel, setBtnLabel] = useState('ENTRAR')
   const [btnStatus, setBtnStatus] = useState(false)
 
   useEffect(() => {
-    document.title = 'Comeve | Login'
+    document.title = 'Extras | Login'
   })
 
   async function handleSubmit(e) {
     e.preventDefault()
     setBtnLabel('Carregando ...')
     setBtnStatus(true)
-    let obj = {email, password}
+   
     try {
 
-      const { data } = await api.post('/login', obj)
+      const { data } = await api.post('/login', loggin)
       //console.log(data)
-      
-      localStorage.setItem('logged',JSON.stringify(data.user))
+
+      localStorage.setItem('logged', JSON.stringify(data.user))
       localStorage.setItem('token_extras', data.token)
       window.location.reload()
       /** */
@@ -50,28 +52,40 @@ function Login() {
 
   }
 
+  const updateField =(e) =>{
+    setAlert(false)
+    setLoggin({...loggin, [e.target.name]:e.target.value })
+  }
   return (
     <div className="container">
       <div className="row justify-content-center mt-5">
         <div className="col-md-8">
-          {alert &&
-            <div className="alert alert-warning mt-2" role="alert">
-              {alert}
-            </div>
-          }
-          <form className="border border-light p-5" onSubmit={handleSubmit}>
+          <h5 className="card-header green white-text text-center py-4">
+            {alert ?
+              alert
+            :
+              <strong>Extras</strong>
+            }
 
-            <input type="text" className="form-control mb-4" placeholder="Usuario"
-              value={email} onChange={e => setEmail(e.target.value)}
-              required
-            />
-            <input type="password" className="form-control mb-4" placeholder="Senha"
-              value={password} onChange={e => setPassword(e.target.value)}
-              required
-            />
-
-            <button className="btn btn-outline-indigo btn-block" disabled={btnStatus} type="submit">{btnLabel}</button>
-          </form>
+          </h5>
+          <div className="card-body px-lg-5 pt-0">
+            <form className="text-center" onSubmit={handleSubmit}>
+              <div className="md-form">
+                <input type="text" name="email" className="form-control" placeholder={'Email'}
+                  value={loggin.email} onChange={updateField} autoFocus />
+                {
+                <label htmlFor="email" >E-mail</label>}
+              </div>
+              <div className="md-form">
+                <input type="password" id="password" name="password" className="form-control" 
+                  placeholder={'Senha'} value={loggin.password} onChange={updateField} />
+                <label htmlFor="password">Senha</label>
+              </div>
+              <button disabled={btnStatus} className="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                {btnLabel}
+              </button>
+            </form>
+          </div>
 
         </div>
       </div>
