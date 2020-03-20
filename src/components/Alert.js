@@ -5,7 +5,8 @@ function Alert({ msg = false, color = 'info' }) {
   return (
     <>
       {msg &&
-        <div className={`alert alert-${color}  col-md-12 mb-0 mt-1`} role="alert">
+        
+        <div className={`alert alert-${color} justify-content-center col-md-12 mb-0 mt-3`} role="alert">
           {msg}
         </div>
       }
