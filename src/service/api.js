@@ -8,6 +8,9 @@ const hostname = () => {
   if(app === 'localhost'){
     return 'http://localhost:8000' 
   }
+  if(app === 'extras-teste.netlify.com'){
+    return 'https://extras-node.azurewebsites.net'
+  }
 
   //https://comeve.netlify.com/
   return 'http://10.20.0.22:8000'
