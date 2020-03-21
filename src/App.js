@@ -46,6 +46,7 @@ function App() {
             <Route path='/home' component={Home} />
 
             <Route exact={true} path='/servicos' component={ServiceList}/>
+            <Route path='/servicos/cadastrar' component={ServiceForm}/>
             <Route path='/servicos/:id' component={ServiceForm}/>
             
             <Route exact={true} path='/relatorios' component={ReportList} />

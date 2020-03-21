@@ -70,7 +70,7 @@ const Navbar = () => {
               <div className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdownMenuLink" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" >{logged.name} | {logged.profile_name}</div>
               <div className="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                <Link className="dropdown-item" to="/usuarios/listar" onClick={handleActive}  >Usuários</Link>
+                <Link className="dropdown-item" to="/usuarios" onClick={handleActive}  >Usuários</Link>
                 <a className="dropdown-item" href="/" onClick={handleLogout}>Sair</a>
               </div>
             </li>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { formatDate } from '../utils/helpers'
 
 function ServiceList() {
 	const [services] = useState(JSON.parse(localStorage.getItem('services')))
 	let history = useHistory()
-	let cont = 1
-
+	
 	useEffect(() => {
 		document.title = 'Serviços'
 		//console.log(services)
@@ -45,8 +45,8 @@ function ServiceList() {
 							{services.map(r =>
 								<tr key={r.id}  
 									onClick={() => handleClick(r.id)} className="cursor-pointer">
-									<th>{cont++}</th>
-									<td>{r.date}</td>
+									<th>{r.id}</th>
+									<td>{formatDate(r.date)}</td>
 									<td>{r.start}</td>
 									<td>{r.end}</td>
 									<td>{r.reason_name}</td>
