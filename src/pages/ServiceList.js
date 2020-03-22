@@ -5,7 +5,7 @@ import { formatDate } from '../utils/helpers'
 function ServiceList() {
 	const [services] = useState(JSON.parse(localStorage.getItem('services')))
 	let history = useHistory()
-	
+
 	useEffect(() => {
 		document.title = 'Serviços'
 		//console.log(services)
@@ -14,14 +14,14 @@ function ServiceList() {
 
 	const handleClick = (id) => {
 		//console.log('redirect ', id)
-		history.push(`/servicos/${id}`)
+		history.push(`/servicos/editar/${id}`)
 
 	}
 	return (
 		<div className="container" >
 			<div className="row mb-3">
 				<div className="col-md-12 border-bottom">
-					<Link type="button" className="btn btn-green float-right" to='/servicos/cadastrar'>Cadastrar Serviço</Link>
+					<Link type="button" className="btn btn-outline-green float-right" to='/servicos/cadastrar'>Cadastrar Serviço</Link>
 
 					<h2>Serviços</h2>
 				</div>
@@ -33,8 +33,6 @@ function ServiceList() {
 							<tr>
 								<th scope="col">COD.</th>
 								<th scope="col">Data</th>
-								<th scope="col">Início</th>
-								<th scope="col">Fim</th>
 								<th scope="col">Motivo</th>
 								<th scope="col">Criador</th>
 								<th scope="col">Status</th>
@@ -43,12 +41,13 @@ function ServiceList() {
 						<tbody>
 
 							{services.map(r =>
-								<tr key={r.id}  
+								<tr key={r.id}
 									onClick={() => handleClick(r.id)} className="cursor-pointer">
 									<th>{r.id}</th>
-									<td>{formatDate(r.date)}</td>
-									<td>{r.start}</td>
-									<td>{r.end}</td>
+									<td>
+										<strong>{formatDate(r.date)}</strong><br/>
+										{r.start} - {r.end}
+									</td>
 									<td>{r.reason_name}</td>
 									<td>{r.user.name}</td>
 									<td>

@@ -1,17 +1,10 @@
-.cursor-pointer{
-  cursor: pointer;    
-}
-.navbar{
-  margin-bottom: 30px;
-}
+
 
 header{
-  margin-bottom: 4em;
+  margin-bottom: 5em;
 }
 
-.container{
-  padding-bottom: 7em;
-}
+
 
 .green {
   background-color: #147919 !important;

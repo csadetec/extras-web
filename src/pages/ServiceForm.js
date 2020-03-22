@@ -7,7 +7,7 @@ import logout from '../utils/logout'
 
 import Alert from '../components/Alert'
 import Loading from '../components/Loading'
-import { imageExists,  diffHours } from '../utils/helpers'
+import { diffHours } from '../utils/helpers'
 import { loadServices } from '../utils/load'
 
 const ServiceForm = (props) => {
@@ -33,7 +33,7 @@ const ServiceForm = (props) => {
 	const [h2, setH2] = useState('Cadastrar Usuário')
 	const [btn, setBtn] = useState({ label: 'Salvar', disabled: false })
 	const [disabled, setDisabled] = useState(true)
-	const [obs, setObs] = useState('teste')
+	//const [obs, setObs] = useState('teste')
 
 	const { id } = props.match.params
 
@@ -49,26 +49,17 @@ const ServiceForm = (props) => {
 		async function load() {
 			//console.log('load user')
 			const { data } = await api.get(`/services/${id}`)
-			data.employees.map(r =>
+
+			data.employees.map(r => {
 				r.reason_name = r.pivot.reason_name
-			)
-			data.employees.map(r =>
-				r.date = r.pivot.date
-			)
-			data.employees.map(r =>
 				r.start = r.pivot.start
-			)
-			data.employees.map(r =>
 				r.end = r.pivot.end
-			)
-			data.employees.map(r =>
 				r.qtd_hours = r.pivot.qtd_hours
-			)
-			data.employees.map( r => 
 				r.pivot = undefined
-			)
-			/** */
-			//console.log(data)
+
+				return r
+			})
+
 			setService(data)
 			setLoading(false)
 			if (logged.id === data.user_id) {
@@ -208,8 +199,8 @@ const ServiceForm = (props) => {
 
 
 	}
-	const updateField = (e) => {
 
+ 	const updateField = (e) => {
 
 		setAlert(false)
 		setService({ ...service, [e.target.name]: e.target.value })
@@ -220,26 +211,31 @@ const ServiceForm = (props) => {
 			{loading ?
 				<Loading />
 				:
-				<div className="container-fluid pb-5">
+				<div className="container-fluid">
 
-					<div className="row mb-4 border-bottom">
-						<div className="col-md-6">
+					<div className="row  border-bottom  fixed-header ">
+						<div className="col-md-6 pt-3">
 							<h2>{h2}</h2>
+							{service.employees.length > 0 &&
+								<h3>Colaboradores: {service.employees.length}</h3>
+							}
 						</div>
-						<div className="col-md-6">
+						<div className="col-md-6 pt-2">
 							{!disabled &&
-								<button onClick={handleSubmit} className="btn btn-outline-success float-right" type="submit" disabled={btn.disabled}>{btn.label}</button>
+								<button onClick={handleSubmit} className="btn btn-success float-right" type="submit" disabled={btn.disabled}>{btn.label}</button>
 							}
 
-							<Link className="btn btn-outline-danger float-right" to='/servicos'>Fechar</Link>
+							<Link className="btn btn-danger float-right" to='/servicos'>Fechar</Link>
 						</div>
 					</div>
 					<div className="row">
 
-						<div className="col-md-6">
+						<div className="col-md-6 sidebar">
 							<div className="card">
 								<h5 className="card-header green white-text text-center py-2">
-									<strong>Informações do Serviço</strong>
+									<strong>Informações do Serviço
+										
+									</strong>
 
 								</h5>
 								<div className="card-body px-lg-2">
@@ -289,20 +285,20 @@ const ServiceForm = (props) => {
 											<div className="md-form mb-2">
 												<input className="form-control form-control-lg" type="search" autoComplete="off" placeholder="Pesquisar Colaborador" list="employeeSearch"
 													value={search} onChange={handleAddEmployee} />
+													
 												<datalist id="employeeSearch">
 													{employees.map(r =>
 														<option key={r.id} value={r.name} />
 													)}
 												</datalist>
-
+													
 											</div>
 										}
 										<div className="form-row">
 								
 											<textarea 
-											autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
-												value={obs} onChange={e => setObs(e.target.value)} 
-											className="form-control" name="obs" placeholder="Observações" rows="3" disabled={disabled}>
+												value={service.obs} onChange={updateField} 
+												className="form-control" name="obs" placeholder="Observações" rows="3" disabled={false}>
 
 											</textarea>
 										</div>
@@ -310,21 +306,24 @@ const ServiceForm = (props) => {
 								</div>
 							</div>
 						</div>
-						<div className="col-md-6">
+						<div className="col-md-6 main">
 							<div className="card">
-								<h5 className="card-header green white-text text-center py-2">
+								<h5 className="card-header green white-text text-center py-2 ">
 									<strong>Colaboradores</strong>
 								</h5>
 								<div className="card-body px-lg-2">
 									<table className="table">
 										<tbody>
 											{service.employees.map(r =>
-												<tr key={r.id} title={r.name} >
+												<tr key={r.id} title={r.name} className="cursor-pointer" >
 													<td onDoubleClick={() => handleDelEmployee(r.id)}
-														className={`${!disabled && `cursor-pointer`} pt-2 pb-0 pr-0`}
+														className={`pt-2 pb-0 pr-0`}
 														title={!disabled ? `Tirar do serviço!\n${r.name}` : r.name}
 													>
-														<img className="img-icon" src={imageExists(r.id)} alt={r.name} />
+														<img className="img-icon mt-1" 
+															src={`https://visiografo.netlify.com/${r.id}.JPG`} 
+															onError={(e) => {e.target.onerror = null; e.target.src='https://visiografo.netlify.com/generico.png'}}
+															alt={r.name} />
 													</td>
 
 													<td className="pl-0">
@@ -340,7 +339,7 @@ const ServiceForm = (props) => {
 														}
 													</td>
 													{disabled ?
-														<td>r.start - r.end</td>
+														<td>{r.start} - {r.end}</td>
 														:
 														<>
 															<td className="pl-0">

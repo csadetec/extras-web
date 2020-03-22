@@ -37,7 +37,7 @@ function UserList(){
 								<td>{r.name}</td>
 								<td>{r.email}</td>
 								<td>{r.profile_name}</td>
-								<td><Link to={`/usuarios/${r.id}`}><i className="fas fa-edit"></i></Link></td>
+								<td><Link to={`/usuarios/editar/${r.id}`}><i className="fas fa-edit"></i></Link></td>
 
 							</tr>
 						)}

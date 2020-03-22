@@ -1,8 +1,10 @@
 import React from 'react'
 
-function Loading(){
+function Loading() {
   return (
-    <h3 className="text-center">Carregando....</h3>
+    <div className="container">
+      <h3 className="text-center">Carregando....</h3>
+    </div>
   )
 }
 

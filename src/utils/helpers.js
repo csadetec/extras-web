@@ -9,8 +9,8 @@ export const formatDate = (dateString) => {
 }
 
 export const imageExists = (id) => {
-
-
+  
+  /*
   const img =  `https://visiografo.netlify.com/${id}.JPG`
 
   var http = new XMLHttpRequest()
@@ -19,8 +19,9 @@ export const imageExists = (id) => {
   if(http.status === 404){
     return `https://visiografo.netlify.com/generico.png`
   }
-  /** */
+  
   return img
+  /** */
 }
 
 export const diffHours = (startComplete, endComplete) => {

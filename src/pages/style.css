@@ -1,10 +1,10 @@
-.md-form label {
-    font-size: 0.8rem;
-    transform: translateY(-35%);
+.container{
+    padding-bottom: 5em;
+}
+.container-fluid{
+    padding-bottom: 6em;
 }
 
-
-/**/
 
 .icon-orange {
     font-size: 20px;

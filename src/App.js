@@ -46,14 +46,17 @@ function App() {
             <Route path='/home' component={Home} />
 
             <Route exact={true} path='/servicos' component={ServiceList}/>
+            <Route path='/servicos/editar/:id' component={ServiceForm}/>
             <Route path='/servicos/cadastrar' component={ServiceForm}/>
-            <Route path='/servicos/:id' component={ServiceForm}/>
-            
+            <Route path='/servicos/teste' component={ServiceForm}/>
+                        
             <Route exact={true} path='/relatorios' component={ReportList} />
 
             <Route exact={true} path='/usuarios' component={UserList} />
+            <Route path='/usuarios/editar/:id' component={UserForm} />            
             <Route path='/usuarios/cadastrar' component={UserForm} />
-            <Route path='/usuarios/:id' component={UserForm} />            
+
+            {/*<Redirect path='*' to='/' />*/}
             
           </Switch>
           <Footer />
