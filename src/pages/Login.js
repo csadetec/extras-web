@@ -9,7 +9,7 @@ function Login() {
     'password':''
   })
   const [alert, setAlert] = useState({
-    'msg':'',
+    'message':'',
     'color':''
   })
   const [btnLabel, setBtnLabel] = useState('ENTRAR')
@@ -57,6 +57,7 @@ function Login() {
   const updateField =(e) =>{
     setAlert(false)
     setLoggin({...loggin, [e.target.name]:e.target.value })
+
   }
   return (
     <div className="container">
@@ -71,12 +72,14 @@ function Login() {
               <form className="text-center" onSubmit={handleSubmit}>
 
                 <div className="md-form">
-                  <input type="text" name="email" className="form-control" 
+                  <input type="text" name="email" id="email" className="form-control" 
                     placeholder='Email'
                     value={loggin.email} onChange={updateField} autoFocus required />
                     {loggin.email &&
                       <label htmlFor="email" >E-mail</label>
                     }
+                    {console.log(loggin.email.length)}
+
                 </div>
                 <div className="md-form">
                   <input type="password" id="password" name="password" className="form-control" 
@@ -92,7 +95,7 @@ function Login() {
               </form>
             </div>
           </div>
-          <Alert msg={alert.msg} color={alert.color} />
+          <Alert message={alert.msg} color={alert.color} />
 
         </div>
       </div>

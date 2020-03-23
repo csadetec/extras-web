@@ -112,7 +112,7 @@ const ServiceForm = (props) => {
 			console.log('push nao carai')
 			console.log(data)
 			/** */
-			history.push(`/servicos/${data.id}`)
+			history.push(`/servicos/editar/${data.id}`)
 
 
 		} catch (e) {
@@ -222,10 +222,10 @@ const ServiceForm = (props) => {
 						</div>
 						<div className="col-md-6 pt-2">
 							{!disabled &&
-								<button onClick={handleSubmit} className="btn btn-success float-right" type="submit" disabled={btn.disabled}>{btn.label}</button>
+								<button onClick={handleSubmit} className="btn btn-outline-success float-right" type="submit" disabled={btn.disabled}>{btn.label}</button>
 							}
 
-							<Link className="btn btn-danger float-right" to='/servicos'>Fechar</Link>
+							<Link className="btn btn-outline-danger float-right" to='/servicos'>Fechar</Link>
 						</div>
 					</div>
 					<div className="row">
@@ -276,7 +276,7 @@ const ServiceForm = (props) => {
 											<div className="col-md-6">
 												<label htmlFor="end">Fim</label>
 												<input type="time" name="end" id="end" className="form-control"
-													value={service.end} onChange={updateField} required />
+													value={service.end} onChange={updateField} disabled={disabled} required />
 
 											</div>
 										</div>
@@ -298,7 +298,7 @@ const ServiceForm = (props) => {
 								
 											<textarea 
 												value={service.obs} onChange={updateField} 
-												className="form-control" name="obs" placeholder="Observações" rows="3" disabled={false}>
+												className="form-control" name="obs" placeholder="Observações" rows="3" disabled={disabled}>
 
 											</textarea>
 										</div>

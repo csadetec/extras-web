@@ -27,6 +27,8 @@ function UserList(){
 							<th scope="col">Nome</th>
 							<th scope="col">Email</th>
 							<th scope="col">Perfil</th>
+							<th scope="col">Editar</th>
+							
 						</tr>
 					</thead>
 					<tbody>

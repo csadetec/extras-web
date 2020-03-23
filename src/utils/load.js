@@ -57,3 +57,13 @@ export async function loadReasons(){
     logout()
   }
 }
+
+export async function loadServicesEmployees(){
+  try{
+    const { data } = await api.get('/services/employees')
+    localStorage.setItem('reports', JSON.stringify(data))
+  }catch(e){
+    console.log(e)
+    logout()
+  }
+}

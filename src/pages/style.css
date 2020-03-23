@@ -1,3 +1,8 @@
+.md-form label {
+    font-size: 0.8rem;
+    transform: translateY(-35%);
+}
+
 .container{
     padding-bottom: 5em;
 }

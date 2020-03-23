@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import {loadServices, loadEmployees ,loadUsers, loadProfiles, loadReasons} from './utils/load'
+import {loadServices, loadEmployees ,loadUsers, loadProfiles, loadReasons, loadServicesEmployees} from './utils/load'
 
 
 import './pages/style.css'
@@ -33,6 +33,7 @@ function App() {
      loadUsers()
      loadProfiles()
      loadReasons()
+     loadServicesEmployees()
     }
 
   },[token])
