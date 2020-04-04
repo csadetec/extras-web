@@ -177,6 +177,7 @@ const ServiceForm = (props) => {
 	}
 
 	const handleUpdateEmployee = (id, e) => {
+
 		let employeesUpdate = service.employees.filter( r => {
 
 			if(r.id === id){
@@ -203,9 +204,14 @@ const ServiceForm = (props) => {
 		setService({...service, employees:employeesUpdate})
 	}
 
+  const handleSyncHours = () => {
+    console.log('sicronizar horario')
+    //const 
+  }
  	const updateField = (e) => {
 
-		setAlert(false)
+    setAlert(false)
+    
 		setService({ ...service, [e.target.name]: e.target.value })
 
 	}
@@ -313,7 +319,7 @@ const ServiceForm = (props) => {
 						<div className="col-md-6 main">
 							<div className="card">
 								<h5 className="card-header green white-text text-center py-2 ">
-									<strong>Colaboradores</strong>
+									<strong>Colaboradores<i className="fas fa-sync float-right cursor-pointer" title="Sicronizar horário" onClick={handleSyncHours}></i></strong>
 								</h5>
 								<div className="card-body px-lg-2">
 									<table className="table">
