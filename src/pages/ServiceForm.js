@@ -206,7 +206,17 @@ const ServiceForm = (props) => {
 
   const handleSyncHours = () => {
     console.log('sicronizar horario')
-    //const 
+
+    let myEmployees = service.employees.map( r => {
+      r.start = service.start
+      r.end = service.end
+      return r
+    })
+
+    setService({...service, employees:myEmployees})
+
+    
+
   }
  	const updateField = (e) => {
 
