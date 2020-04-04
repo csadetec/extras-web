@@ -5,7 +5,7 @@ import './Service.css'
 
 import logout from '../utils/logout'
 
-import Alert from '../components/Alert'
+import AlertModal from '../components/AlertModal'
 import Loading from '../components/Loading'
 import { diffHours } from '../utils/helpers'
 import { loadServices } from '../utils/load'
@@ -19,7 +19,7 @@ const ServiceForm = (props) => {
 		'start': '',
 		'end': '',
 		'employees': [],
-		'obs': ''
+		'obs': null
 	})
 	const [reasons] = useState(JSON.parse(localStorage.getItem('reasons')))
 	const [alert, setAlert] = useState({
@@ -83,7 +83,15 @@ const ServiceForm = (props) => {
 				const { status, data/*, message*/ } = await api.put(`/services/${id}`, service)
 				//console.log(data)
 				if (data.status) {
-					setAlert({ message: 'Usuario já cadastrado', color: 'warning' })
+          let find =  employees.filter( r => {
+            return data.find.employee_id === r.id
+          })
+          data.find = ({...data.find, name:find[0].name})
+          /*
+          console.log(find)
+          console.log(data.find)
+          /** */
+					setAlert({ message: 'Colaborador agendado em outro serviço', color: 'warning', employee:data.find })
 					setBtn({ label: 'Salvar', disabled: false })
 
 					return
@@ -108,10 +116,7 @@ const ServiceForm = (props) => {
 			loadServices()
 			setAlert({ message: 'Cadastrado com Sucesso', color: 'success' })
 			setBtn({ label: 'Salvar', disabled: false })
-			/*
-			console.log('push nao carai')
-			console.log(data)
-			/** */
+		
 			history.push(`/servicos/editar/${data.id}`)
 
 
@@ -196,8 +201,6 @@ const ServiceForm = (props) => {
 		})
 		
 		setService({...service, employees:employeesUpdate})
-
-
 	}
 
  	const updateField = (e) => {
@@ -220,12 +223,13 @@ const ServiceForm = (props) => {
 								<h3>Colaboradores: {service.employees.length}</h3>
 							}
 						</div>
-						<div className="col-md-6 pt-2">
+						<div className="col-md-6 pt-2 float-right">
+              <Link className="btn btn-outline-danger float-right"  to='/servicos'>Fechar</Link>
+
 							{!disabled &&
-								<button onClick={handleSubmit} className="btn btn-outline-success float-right" type="submit" disabled={btn.disabled}>{btn.label}</button>
+								<button onClick={handleSubmit} className="btn btn-outline-success float-right" data-toggle="modal" data-target="#alertModal" disabled={btn.disabled}>{btn.label}</button>
 							}
 
-							<Link className="btn btn-outline-danger float-right" to='/servicos'>Fechar</Link>
 						</div>
 					</div>
 					<div className="row">
@@ -367,7 +371,11 @@ const ServiceForm = (props) => {
 							</div>
 						</div>
 					</div>
-					<Alert message={alert.message} color={alert.color} />
+          <AlertModal 
+            color={alert.color}
+            message={alert.message}
+            employee={alert.employee}
+          />
 				</div>
 			}
 		</>

@@ -1,15 +1,19 @@
 import React from 'react'
+import {formatDate} from '../utils/helpers'
 
-function AlertModal() {
+function AlertModal({ color, message, text, employee }) {
+
+  //const users = useState(localStorage.getItem(users))
+
   return (
     <>
 
-      <div className="modal fade" id="centralModalSuccess" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div className="modal-dialog modal-notify modal-success" role="document">
+      <div className="modal fade show" id="alertModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true"  >
+        <div className={`modal-dialog modal-notify modal-${color}`} role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <p className="heading lead">Modal Success</p>
+              <p className="heading lead">{message}</p>
 
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true" className="white-text">&times;</span>
@@ -17,16 +21,33 @@ function AlertModal() {
             </div>
             <div className="modal-body">
               <div className="text-center">
-                <i className="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam blanditiis
-                ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat. Esse ratione fuga, enim,
-             ab officiis totam.</p>
+                {color === 'success' &&
+                  <i className="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                }
+                {color === 'warning' &&
+                  <i className="fas fa-ban fa-4x mb-3 animated rotateIn"></i>
+                }
+                {employee &&
+                  <p className="text-left">
+                    <strong>Nome:</strong>  {employee.name} <br/>
+                    <strong>Motivo:</strong> {employee.reason_name} <br/>
+                    <strong>Data:</strong> {formatDate(employee.date)} <br/>
+                    <strong>Horário:</strong> {employee.start} às {employee.end}
+                  </p>
+                }
               </div>
             </div>
 
             <div className="modal-footer justify-content-center">
-              <button className="btn btn-success">Get it now <i className="far fa-gem ml-1 text-white"></i></button>
-              <button className="btn btn-outline-success waves-effect" data-dismiss="modal">No, thanks</button>
+              {color === 'success' || color === 'warning' ?
+                <button className={`btn btn-outline-${color}`} data-dismiss="modal">Fechar</button>
+                :
+                <>
+                  <button className={`btn btn-${color}`}>Confirmar</button>
+                  <button className={`btn btn-outline-${color}`} data-dismiss="modal">Cancelar</button>
+                </>
+              }
+
             </div>
           </div>
         </div>

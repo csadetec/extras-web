@@ -3,8 +3,9 @@ import { Link, useHistory } from 'react-router-dom'
 import api from '../service/api'
 import logout from '../utils/logout'
 
-import Alert from '../components/Alert'
+//import Alert from '../components/Alert'
 import Loading from '../components/Loading'
+import AlertModal from '../components/AlertModal'
 
 import { loadUsers, loadServices } from '../utils/load'
 
@@ -19,8 +20,9 @@ const UserForm = (props) => {
 
 	const [profiles] = useState(JSON.parse(localStorage.getItem('profiles')))
 	const [alert, setAlert] = useState({
-		'message':'',
-		'color':''
+		message:'',
+    color:'',
+  
 	})
 	const [loading, setLoading] = useState(true)
 	const [h2, setH2] = useState('Cadastrar Usuário')
@@ -36,7 +38,6 @@ const UserForm = (props) => {
 			return
 		}
 		async function load() {
-			console.log('load user')
 			const { data } = await api.get(`/users/${id}`)
 			setUser({ ...data, password: '' })
 			setH2('Editar Usuário')
@@ -60,7 +61,7 @@ const UserForm = (props) => {
 
 				//console.log(data)
 				if (status === 200) {
-
+          console.log('update with success')
 					//setAlert('Usuário Atualizado com Sucesso')
 					setAlert({message:'Usuário Atualizado com Sucesso!', color:'success'})
 					setBtn({ label: 'Salvar', disabled: false })
@@ -105,6 +106,7 @@ const UserForm = (props) => {
 				</div>
 			</div>
 			<div className="row justify-content-center">
+
 				{loading ?
 					<Loading />
 					:
@@ -114,8 +116,9 @@ const UserForm = (props) => {
 
 							<h5 className="card-header green white-text text-center py-4">
 								<strong>Informações do Usuário</strong>
+                {/*
 								<Alert msg={alert.message} color={alert.color} />
-							
+                */}
 
 							</h5>
 							<div className="card-body px-lg-5">
@@ -154,7 +157,7 @@ const UserForm = (props) => {
 							      </select>
 							    </div>
 
-									<button className="btn btn-outline-indigo btn-rounded  z-depth-0 my-4 waves-effect" type="submit" disabled={btn.disabled}>{btn.label}</button>
+									<button className="btn btn-outline-indigo btn-rounded" type="submit" disabled={btn.disabled} data-toggle="modal" data-target="#alertModal">{btn.label}</button>
 									<Link className="btn btn-outline-danger" to='/usuarios'>Fechar</Link>
 
 								</form>
@@ -164,7 +167,11 @@ const UserForm = (props) => {
 					</div>
 				}
 			</div>
-		</div>
+      <AlertModal 
+        color={alert.color}
+        message={alert.message}
+      />
+    </div>
 	)
 }
 

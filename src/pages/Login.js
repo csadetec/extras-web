@@ -5,8 +5,8 @@ import Alert from '../components/Alert'
 
 function Login() {
   const [loggin, setLoggin] = useState({
-    'email':'',
-    'password':''
+    'email':'teste@gmail.com',
+    'password':'teste'
   })
   const [alert, setAlert] = useState({
     'message':'',
@@ -40,7 +40,7 @@ function Login() {
       if (!e.response) {
         return setAlert({msg:'Erro no Servidor!', color:'warning'})
       }
-
+      /*
       let { field } = e.response.data[0]
       console.log(field)
 
@@ -48,7 +48,7 @@ function Login() {
         return setAlert({msg:'E-mail não cadastrado!', color:'warning'})
       }
       setAlert({msg:'Senha Errada!', color:'warning'})
-
+      /** */
     }
 
 
@@ -78,7 +78,7 @@ function Login() {
                     {loggin.email &&
                       <label htmlFor="email" >E-mail</label>
                     }
-                    {console.log(loggin.email.length)}
+              
 
                 </div>
                 <div className="md-form">

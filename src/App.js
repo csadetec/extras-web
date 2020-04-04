@@ -23,6 +23,8 @@ import ReportList from './pages/ReportList'
 import UserList from './pages/UserList'
 import UserForm from './pages/UserForm'
 
+//pages teste
+import Teste from './pages/Teste'
 function App() {
   const token = localStorage.getItem('token_extras')
 
@@ -57,6 +59,7 @@ function App() {
             <Route path='/usuarios/editar/:id' component={UserForm} />            
             <Route path='/usuarios/cadastrar' component={UserForm} />
 
+            <Route path='/teste' component={Teste} />
             {/*<Redirect path='*' to='/' />*/}
             
           </Switch>

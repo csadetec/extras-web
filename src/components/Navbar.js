@@ -10,6 +10,7 @@ const Navbar = () => {
   const [servicos, setServicos] = useState('nav-item')
   const [relatorios, setRelatorios] = useState('nav-item')
   const [usuarios, setUsuarios] = useState('nav-item')
+  const [teste, setTeste] = useState('nav-item')
   const [logged] = useState(JSON.parse(localStorage.getItem('logged')))
 
   useEffect(() => {
@@ -28,19 +29,21 @@ const Navbar = () => {
     setServicos('nav-item')
     setRelatorios('nav-item')
     setUsuarios('nav-item')
+    setTeste('nav-item')
 
     let pathname = window.location.pathname
     /// console.log(pathname)
-    if (pathname === '/servicos') {
+    if (pathname === '/servicos')
       return setServicos('nav-item active')
-    }
-    if (pathname === '/relatorios') {
-      return setRelatorios('nav-item active')
-    }
 
-    if (pathname === '/usuarios') {
+    if (pathname === '/relatorios')
+      return setRelatorios('nav-item active')
+
+    if (pathname === '/usuarios')
       return setUsuarios('nav-item active')
-    }
+
+    if (pathname === '/teste')
+      return setTeste('nav-item active')
     return setHome('nav-item active')
   }
   return (
@@ -64,6 +67,9 @@ const Navbar = () => {
             </li>
             <li className={usuarios}>
               <Link className="nav-link" to="/usuarios">Usuários</Link>
+            </li>
+            <li className={teste}>
+              <Link className="nav-link" to="/teste">Teste</Link>
             </li>
 
             <li className="nav-item dropdown">
