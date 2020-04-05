@@ -4,35 +4,48 @@ import api from '../service/api'
 import { saveAs } from 'file-saver'
 
 function ReportList() {
-	const [reports] = useState(JSON.parse(localStorage.getItem('reports')))
+	const [reports, setReports] = useState([])
 	//console.log(users)
 	const [date, setDate] = useState({ start: '', end: '' })
 
 	let cont = 1
 	useEffect(() => {
-		document.title = 'Relatório'
+    document.title = 'Relatório'
+    
+    let date = new Date()
+    const yaer = date.getFullYear()
+    let month = date.getMonth()
+    let day = date.getDate()
 
-		setDate({start:Date.now(), end:Date.now()})
+    if(month++ < 10)month='0'+month
+    if(day < 10) day='0'+day
+
+    date = `${yaer}-${month}-${day}`
+
+		setDate({start:date, end:date})
 	
 	},[])
-/*
-	const inputStyle = {
-		border: 'none',
-		borderBottom: '2px solid #495057',
-		borderRadius: 0,
-		marginLength: '3px',
-		paddingTop: '1px'
-	
-	}
-		/** */
+
 	const updateField = ({ target: { name, value } }) => {
 		setDate({ ...date, [name]: value })
 	}
 
-	const handleSubmit = () => {
+	const handleFilter = () => {
+    if(validation()) return;
+    api.get(`/services/employees/${date.start}/${date.end}`)
+      .then((res) => {
+        const { data } = res
+        setReports(data)
+        //console.log(data)
+      })
+	}
+
+
+	const handleMakePdf = () => {
 		//e.preventDefault()
-		//console.log(date)
-		
+		console.log(date)
+    
+    
 		api.post('/pdf', date)
 			.then(() => api.get('/pdf', { responseType: 'blob' }))
 			.then((res) => {
@@ -41,7 +54,13 @@ function ReportList() {
 			})
 		/** */
 	}
-
+  const validation = () => {
+    if(!date.start || !date.end){
+      window.alert('Preencha todos os campos')
+      return true
+    }
+    return false
+  }
 	return (
 		<div className="container-fluid " >
 			<div className="row justify-content mb-3 border-bottom">
@@ -53,7 +72,7 @@ function ReportList() {
 			</div>
 
 			<div className="row">
-				<div className="col-md-3 mb-3">
+				<div className="col-md-2 mb-3">
 					<div className="card">
 						<h5 className="card-header green white-text text-center py-2">
 							<strong>Burcar Intervalo</strong>
@@ -72,13 +91,14 @@ function ReportList() {
 									value={date.end} onChange={updateField} />
 
 							</div>
+							<button onClick={handleFilter} className="btn btn-outline-info btn-block mb-3" >Buscar</button>
 
-							<button onClick={handleSubmit} className="btn btn-outline-danger btn-block" >Gerar PDF</button>
+							<button onClick={handleMakePdf} className="btn btn-outline-danger btn-block" >Gerar PDF</button>
 
 						</div>
 					</div>
 				</div>
-				<div className="col-md-9">
+				<div className="col-md-10">
 					<div className="card">
 						<h5 className="card-header green white-text text-center py-2">
 							<strong>Colaboradores e seus serviços</strong>
@@ -91,6 +111,8 @@ function ReportList() {
 										<th scope="col">Nome</th>
 										<th scope="col">Motivo</th>
 										<th scope="col">Date</th>
+                    <th scope="col">Início</th>
+                    <th scope="col">Fim</th>
 										<th scope="col">Qtd. Horas</th>
 
 									</tr>
@@ -103,6 +125,9 @@ function ReportList() {
 											<td>{r.employee.name} | {r.employee.id}</td>
 											<td>{r.reason_name}</td>
 											<td>{formatDate(r.date)}</td>
+                      <td>{r.start}</td>
+											<td>{r.end}</td>
+
 											<td>{r.qtd_hours}</td>
 										</tr>
 									)}
