@@ -15,8 +15,20 @@ function ServiceList() {
 	const handleClick = (id) => {
 		//console.log('redirect ', id)
 		history.push(`/servicos/editar/${id}`)
-
-	}
+  }
+  
+  const title = (employees) => {
+    let txt = ``
+    +`Editar Serviço\n\n`
+    +`Colaboradores\n`
+    
+    txt += employees.map( r =>{
+      return `\n${r.name} | ${r.function ===  `PROFESSOR`   ? `PROFESSOR` : `ANALISTA`}`
+    })
+    /** */
+    //console.log(services)
+    return txt
+  }
 	return (
 		<div className="container" >
 			<div className="row mb-3">
@@ -41,7 +53,8 @@ function ServiceList() {
 						<tbody>
 
 							{services.map(r =>
-								<tr key={r.id}
+                <tr key={r.id}
+                  title={title(r.employees)}
 									onClick={() => handleClick(r.id)} className="cursor-pointer">
 									<th>{r.id}</th>
 									<td>

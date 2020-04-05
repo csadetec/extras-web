@@ -261,7 +261,20 @@ const ServiceForm = (props) => {
     }
 
     return false
-  }
+	}
+	
+	const title = (employee) => {
+		let txt =``
+		if(!disabled)txt += 'Clique Duas vezes para retirar\n'
+		
+		if(employee.function !== 'PROFESSOR'){
+			employee.function = 'ANALISTA'
+		}
+
+		txt += `${employee.name} | ${employee.function}`
+		
+		return txt
+	}
  	const updateField = (e) => {
 
 
@@ -393,8 +406,7 @@ const ServiceForm = (props) => {
 												<tr key={r.id} title={r.name} className="cursor-pointer" >
 													<td onDoubleClick={() => handleDelEmployee(r.id)}
 														className={`pt-2 pb-0 pr-0`}
-														title={!disabled ? `Tirar do serviço!\n${r.name}` : r.name}
-													>
+														title={title(r)}	>
 														<img className="img-icon mt-1" 
 															src={`https://visiografo.netlify.com/${r.id}.JPG`} 
 															onError={(e) => {e.target.onerror = null; e.target.src='https://visiografo.netlify.com/generico.png'}}
