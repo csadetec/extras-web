@@ -19,7 +19,7 @@ const ServiceForm = (props) => {
 		'start': '',
 		'end': '',
 		'employees': [],
-		'obs': null
+		'obs': ''
 	})
 	const [reasons] = useState(JSON.parse(localStorage.getItem('reasons')))
 	const [alert, setAlert] = useState({
@@ -30,18 +30,18 @@ const ServiceForm = (props) => {
 	const [employees] = useState(JSON.parse(localStorage.getItem('employees')))
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState('')
-	const [h2, setH2] = useState('Cadastrar Usuário')
+	const [h2, setH2] = useState('Cadastrar Serviço')
 	const [btn, setBtn] = useState({ label: 'Salvar', disabled: false })
 	const [disabled, setDisabled] = useState(true)
 	//const [obs, setObs] = useState('teste')
 
-	const { id } = props.match.params
+	let  { id } = props.match.params
 
 	const history = useHistory()
 
 	useEffect(() => {
 		if (id === undefined) {
-			document.title = 'Cadastrar Usuário'
+			document.title = 'Cadastrar Serviço'
 			setDisabled(false)
 			setLoading(false)
 			return
@@ -59,7 +59,8 @@ const ServiceForm = (props) => {
 
 				return r
 			})
-
+      if(!data.obs) data.obs = undefined
+      if(!data.date) data.date = undefined
 			setService(data)
 			setLoading(false)
 			if (logged.id === data.user_id) {
@@ -72,12 +73,15 @@ const ServiceForm = (props) => {
 
 	}, [id, logged.id])
 	/** */
-	async function handleSubmit(e) {
-		//e.preventDefault()
+	async function handleSubmit() {
+    //e.preventDefault()
 
+    if(validation()){
+      return
+    }
 		setBtn({ label: 'Salvando...', disabled: true })
 		/**/
-		//console.log(service)
+    //console.log(service)
 		try {
 			if (id) {
 				const { status, data/*, message*/ } = await api.put(`/services/${id}`, service)
@@ -105,7 +109,7 @@ const ServiceForm = (props) => {
 				}
 			}
 
-			const { data } = await api.post('/services', service)
+      const { data } = await api.post('/services', service)
 			const { message } = data
 
 			if (message) {
@@ -210,6 +214,7 @@ const ServiceForm = (props) => {
     let myEmployees = service.employees.map( r => {
       r.start = service.start
       r.end = service.end
+      r.qtd_hours = diffHours(r.start, r.end)
       return r
     })
 
@@ -218,7 +223,47 @@ const ServiceForm = (props) => {
     
 
   }
+
+  async function handleDuplicate(){
+    //console.log('duplicate service')
+    const serviceDuplicate = ({...service, date:null})
+    
+    serviceDuplicate.employees.map( r => 
+      r.date = null
+    )
+    //console.log(serviceDuplicate)
+    const { data } = await api.post('/services', serviceDuplicate)
+    const { message } = data
+    if (message) {
+      setAlert({ message, color: 'warning' })
+      setBtn({ label: 'Salvar', disabled: false })
+      return;
+    }
+    await loadServices()
+    
+    setAlert({ message: 'Duplicado com Sucesso', color: 'success' })
+    setBtn({ label: 'Salvar', disabled: false })
+    console.log(serviceDuplicate)
+    console.log(data)
+    if(data.id){
+      history.push(`/servicos/editar/${data.id}`)
+      window.location.reload()
+    }
+   
+  }
+  const validation = () => {
+  
+    if(!service.date){
+      let txt = `Data é Obrigatório`
+      setAlert({color:'warning', message:txt})
+      return true
+
+    }
+
+    return false
+  }
  	const updateField = (e) => {
+
 
     setAlert(false)
     
@@ -236,7 +281,7 @@ const ServiceForm = (props) => {
 						<div className="col-md-6 pt-3">
 							<h2>{h2}</h2>
 							{service.employees.length > 0 &&
-								<h3>Colaboradores: {service.employees.length}</h3>
+								<h3>Colaboradores: {service.employees.length} | <i className="far fa-clone cursor-pointer" title="Duplicar Serviço" onClick={handleDuplicate}></i></h3> 
 							}
 						</div>
 						<div className="col-md-6 pt-2 float-right">
@@ -245,7 +290,6 @@ const ServiceForm = (props) => {
 							{!disabled &&
 								<button onClick={handleSubmit} className="btn btn-outline-success float-right" data-toggle="modal" data-target="#alertModal" disabled={btn.disabled}>{btn.label}</button>
 							}
-
 						</div>
 					</div>
 					<div className="row">
@@ -283,7 +327,7 @@ const ServiceForm = (props) => {
 											</div>
 											<div className="col-md-6 mb-2 ">
 												<input type="date" name="date" className="form-control"
-													value={service.date} onChange={updateField} disabled={disabled} required />
+													value={service.date || ''} onChange={updateField} disabled={disabled}  />
 											</div>
 										</div>
 
@@ -333,6 +377,17 @@ const ServiceForm = (props) => {
 								</h5>
 								<div className="card-body px-lg-2">
 									<table className="table">
+                    <thead>
+                      <tr>
+                        {/*}
+                        <th></th>
+                        <th>Natureza</th>
+                        <th>Inicio</th>
+                        <th>Fim</th>
+                        <th>Qtd. Horas</th>
+                  */}
+                      </tr>
+                    </thead>
 										<tbody>
 											{service.employees.map(r =>
 												<tr key={r.id} title={r.name} className="cursor-pointer" >
@@ -370,13 +425,14 @@ const ServiceForm = (props) => {
 															</td>
 														</>
 													}
-													<td className="pl-0">
-														{disabled ? 
-															r.qtd_hours
+													<td className="pl-0">	{r.qtd_hours}
+                          
+														{/*disabled ? 
+														
 														:
-														<input type="time" className="input-employee-time" value={r.qtd_hours} disabled={true} />
+														{/*<input type="time" className="input-employee-time" value={r.qtd_hours} disabled={true}  /> */}
 
-														}
+														
 													</td>
 												</tr>
 											)}

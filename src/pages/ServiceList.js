@@ -45,7 +45,8 @@ function ServiceList() {
 									onClick={() => handleClick(r.id)} className="cursor-pointer">
 									<th>{r.id}</th>
 									<td>
-										<strong>{formatDate(r.date)}</strong><br/>
+											<strong>{formatDate(r.date)}</strong>
+											<br/>
 										{r.start} - {r.end}
 									</td>
 									<td>{r.reason_name}</td>

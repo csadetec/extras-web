@@ -1,6 +1,9 @@
 //import api from 'axios'  
 
 export const formatDate = (dateString) => {
+  if(!dateString){
+    return 'INDEFINIDO'
+  }
   const date = dateString.split('-')
   const day = date[2]
   const month = date[1] 
