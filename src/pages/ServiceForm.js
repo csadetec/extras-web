@@ -133,9 +133,16 @@ const ServiceForm = (props) => {
 
 	const handleAddEmployee = (e) => {
 		setAlert(false)
-		const employeeSearch = e.target.value
+
+		let employeeSearch = e.target.value
 		setSearch(employeeSearch)
 
+		
+		employeeSearch = employeeSearch.replace(' | ', '')
+		employeeSearch = employeeSearch.replace('PROFESSOR', '')
+		employeeSearch = employeeSearch.replace('ANALISTA DE ÁREA DO CONHECIMENTO SÊNIOR', '')
+		/**/
+		//console.log(employeeSearch)
 	
 		let employeeVerify = employees.filter(r => {
 			return r.name === employeeSearch
@@ -157,6 +164,15 @@ const ServiceForm = (props) => {
 			})
 
 			const employeesMy = ([...service.employees, employeeVerify])
+
+			employeesMy.sort(function(a, b){
+				let x = a.name 
+				let y = b.name
+
+				return x < y ? -1 : x > y ? 1 : 0
+			})
+
+			//console.log(employeesMy)
 			setService({ ...service, employees: employeesMy })
 			setSearch('')
 			return
@@ -365,7 +381,8 @@ const ServiceForm = (props) => {
 													
 												<datalist id="employeeSearch">
 													{employees.map(r =>
-														<option key={r.id} value={r.name} />
+														<option key={r.id} value={r.name + ' | ' + r.function}  />
+														
 													)}
 												</datalist>
 													

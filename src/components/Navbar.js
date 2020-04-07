@@ -9,8 +9,10 @@ const Navbar = () => {
 
   const [servicos, setServicos] = useState('nav-item')
   const [relatorios, setRelatorios] = useState('nav-item')
+  /*
   const [usuarios, setUsuarios] = useState('nav-item')
-  const [teste, setTeste] = useState('nav-item')
+  const [colaboradores, setColaboradores] = useState('nav-item')
+  /** */
   const [logged] = useState(JSON.parse(localStorage.getItem('logged')))
 
   useEffect(() => {
@@ -28,9 +30,10 @@ const Navbar = () => {
     setHome('nav-item')
     setServicos('nav-item')
     setRelatorios('nav-item')
+    /*
     setUsuarios('nav-item')
-    setTeste('nav-item')
-
+    setColaboradores('nav-item')
+    /** */
     let pathname = window.location.pathname
     /// console.log(pathname)
     if (pathname === '/servicos')
@@ -39,12 +42,15 @@ const Navbar = () => {
     if (pathname === '/relatorios')
       return setRelatorios('nav-item active')
 
+    if(pathname === '/home')
+      return setHome('nav-item active')
+    /*
     if (pathname === '/usuarios')
       return setUsuarios('nav-item active')
 
-    if (pathname === '/teste')
-      return setTeste('nav-item active')
-    return setHome('nav-item active')
+    if (pathname === '/colaboradores')
+      return setColaboradores('nav-item active')
+    /** */
   }
   return (
     <header>
@@ -65,18 +71,22 @@ const Navbar = () => {
             <li className={relatorios}>
               <Link className="nav-link" to="/relatorios">Relatórios</Link>
             </li>
+            {/*}
             <li className={usuarios}>
               <Link className="nav-link" to="/usuarios">Usuários</Link>
             </li>
-            <li className={teste}>
-              <Link className="nav-link" to="/teste">Teste</Link>
+            
+            <li className={colaboradores}>
+              <Link className="nav-link" to="/colaboradores">Colaboradores</Link>
             </li>
-
+            */}
             <li className="nav-item dropdown">
               <div className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdownMenuLink" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" >{logged.name} | {logged.profile_name}</div>
               <div className="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                 <Link className="dropdown-item" to="/usuarios" onClick={handleActive}  >Usuários</Link>
+                <Link className="dropdown-item" to="/colaboradores" onClick={handleActive}  >Colaboradores</Link>
+
                 <a className="dropdown-item" href="/" onClick={handleLogout}>Sair</a>
               </div>
             </li>

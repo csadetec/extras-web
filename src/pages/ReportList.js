@@ -47,10 +47,13 @@ function ReportList() {
     
     
 		api.post('/pdf', date)
-			.then(() => api.get('/pdf', { responseType: 'blob' }))
+			.then(() => api.get(`/pdf`, { responseType: 'blob' }))
 			.then((res) => {
 				const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
 				saveAs(pdfBlob, `${date.start} - ${date.end}.pdf`)
+			})
+			.then(() => {
+				window.location.reload()
 			})
 		/** */
 	}
