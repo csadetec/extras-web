@@ -26,6 +26,10 @@ import UserForm from './pages/UserForm'
 //pages employees
 import EmployeeList from './pages/EmployeeList'
 
+//pages profiles
+import ProfileList from './pages/ProfileList'
+import ProfileForm from './pages/ProfileForm'
+
 function App() {
   const token = localStorage.getItem('token_extras')
 
@@ -61,6 +65,12 @@ function App() {
             <Route path='/usuarios/cadastrar' component={UserForm} />
 
             <Route exact={true} path='/colaboradores' component={EmployeeList} />
+
+            <Route exact={true} path='/perfis' component={ProfileList} />
+            <Route path='/perfis/editar/:id' component={ProfileForm} />
+            <Route path='/perfis/cadastrar' component={ProfileForm} />
+            
+            
             {/*<Redirect path='*' to='/' />*/}
             
           </Switch>

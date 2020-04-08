@@ -5,8 +5,8 @@ import Alert from '../components/Alert'
 
 function Login() {
   const [loggin, setLoggin] = useState({
-    'email':'teste@gmail.com',
-    'password':'teste'
+    'email':'',
+    'password':''
   })
   const [alert, setAlert] = useState({
     'message':'',

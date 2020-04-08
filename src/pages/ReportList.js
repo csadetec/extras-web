@@ -40,18 +40,35 @@ function ReportList() {
       })
 	}
 
+	async function handleMakePdf(){
 
-	const handleMakePdf = () => {
+		const  {status }  = await api.post('/pdf', date)
+
+		if(status === 204){
+			const { data } = await api.get('/pdf', {responseType: 'blob'})
+
+			const pdf = new Blob([data], { type:'application/pdf'})
+			await saveAs(pdf, `${date.start} - ${date.end}.pdf`)
+			console.log(pdf)
+		}
+
+	}
+
+
+	const teste = () => {
 		//e.preventDefault()
 		console.log(date)
     
     
 		api.post('/pdf', date)
+			.then(() => api.post('/pdf', date))
 			.then(() => api.get(`/pdf`, { responseType: 'blob' }))
-			.then((res) => {
+			.then((res) => {				
 				const pdfBlob = new Blob([res.data], { type: 'application/pdf' })
 				saveAs(pdfBlob, `${date.start} - ${date.end}.pdf`)
+				/**/
 			})
+			/*
 			.then(() => {
 				window.location.reload()
 			})

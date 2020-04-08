@@ -67,3 +67,13 @@ export async function loadServicesEmployees(){
     logout()
   }
 }
+
+export async function loadLogged(id){
+  try{
+    const { data } = await api.get(`/users/${id}`)
+    localStorage.setItem('logged', JSON.stringify(data))
+  }catch(e){
+    console.log(e)
+    logout()
+  }
+}

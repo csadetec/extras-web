@@ -7,25 +7,21 @@ import logout from '../utils/logout'
 import Loading from '../components/Loading'
 import AlertModal from '../components/AlertModal'
 
-import { loadUsers, loadServices } from '../utils/load'
+import { loadUsers, loadProfiles, loadLogged} from '../utils/load'
 
 const UserForm = (props) => {
 	/** */
-	const [user, setUser] = useState({
-		'email': '',
-		'password': '',
+	const [profile, setProfile] = useState({
 		'name': '',
-		'profile_name': ''
 	})
 
-	const [profiles] = useState(JSON.parse(localStorage.getItem('profiles')))
 	const [alert, setAlert] = useState({
 		message:'',
     color:'',
   
 	})
 	const [loading, setLoading] = useState(true)
-	const [h2, setH2] = useState('Cadastrar Usuário')
+	const [h2, setH2] = useState('Cadastrar Perfil')
 	const [btn, setBtn] = useState({ label: 'Salvar', disabled: false })
 	const { id } = props.match.params
 
@@ -33,16 +29,16 @@ const UserForm = (props) => {
 
 	useEffect(() => {
 		if (id === undefined) {
-			document.title = 'Cadastrar Usuário'
+			document.title = 'Cadastrar Perfil'
 			setLoading(false)
 			return
 		}
 		async function load() {
-			const { data } = await api.get(`/users/${id}`)
-			setUser({ ...data, password: '' })
-			setH2('Editar Usuário')
+			const { data } = await api.get(`/profiles/${id}`)
+			setProfile(data)
+			setH2('Editar Perfil')
 			setLoading(false)
-			document.title = 'Editar Usuário'
+			document.title = 'Editar Perfil'
 		}
 		load()
 
@@ -57,21 +53,21 @@ const UserForm = (props) => {
 		/** */
 		try {
 			if (id) {
-				const { status } = await api.put(`/users/${id}`, user)
+				const { status } = await api.put(`/profiles/${id}`, profile)
 
 				//console.log(data)
 				if (status === 200) {
-          console.log('update with success')
-					//setAlert('Usuário Atualizado com Sucesso')
-					setAlert({message:'Usuário Atualizado com Sucesso!', color:'success'})
+        
+					setAlert({message:'Perfil Atualizado com Sucesso!', color:'success'})
 					setBtn({ label: 'Salvar', disabled: false })
+					loadProfiles()
 					loadUsers()
-					loadServices()
+					//loadLogged(logg)
 					return;
 				}
 			}
 
-			const { data } = await api.post('/users', user)
+			const { data } = await api.post('/profiles', profile)
 			const { message } = data
 			console.log(data)
 			if (message) {
@@ -79,12 +75,15 @@ const UserForm = (props) => {
 				setBtn({ label: 'Salvar', disabled: false })
 				return;
 			}
-			
+			/*
 			await loadUsers()
-			await loadServices()
+			await loadProfiles()
 			/**/
-			history.push('/usuarios')
-			window.location.reload()
+			history.push('/perfis')
+
+      window.location.reload()
+
+
 
 		} catch (e) {
 
@@ -95,11 +94,7 @@ const UserForm = (props) => {
 	const updateField = (e) => {
 	
 		setAlert(false)
-		/*
-		console.log(e.target.name)
-		console.log(e.target.value)
-		/**/
-		setUser({ ...user, [e.target.name]:e.target.value })
+		setProfile({ ...profile, [e.target.name]:e.target.value })
 
 
 	}
@@ -120,7 +115,7 @@ const UserForm = (props) => {
 						<div className="card">
 
 							<h5 className="card-header green white-text text-center py-4">
-								<strong>Informações do Usuário</strong>
+								<strong>Informações do Perfil</strong>
                 {/*
 								<Alert msg={alert.message} color={alert.color} />
                 */}
@@ -131,39 +126,15 @@ const UserForm = (props) => {
 								<form className="text-center" onSubmit={handleSubmit}>
 
 								  <div className="md-form mt-3">
-							      <input type="email" name="email" id="email" className="form-control" value={user.email}
-							        onChange={updateField} placeholder="Email" required  />
-							      {user.email &&
-							        <label htmlFor="email" >E-mail</label>
+							      <input type="text" name="name" id="name" className="form-control" value={profile.name}
+							        onChange={updateField} placeholder="Name" required  />
+							      {profile.name &&
+							        <label htmlFor="name" >Nome</label>
 							      }
 							    </div>
-			  					<div className="md-form mt-3">
-							      <input type="password" name="password" id="password" className="form-control" value={user.password}
-							        onChange={updateField} placeholder="Password"  />
-							      {user.password &&
-							        <label htmlFor="email" >Password</label>
-							      }
-							    </div>
-			    				<div className="md-form mt-3">
-							      <input type="text" name="name" id="name" className="form-control" value={user.name}
-							        onChange={updateField} placeholder="Name"  />
-							      {user.name &&
-							        <label htmlFor="name" >Name</label>
-							      }
-							    </div>
-
-					  			<div className="form-row">
-							      <select value={user.profile_name} className="form-control"  
-							        onChange={updateField} name="profile_name" required>
-							        <option value="">Selecione o Perfil</option>
-							        {profiles.map(r =>
-							          <option key={r.id} value={r.name}>{r.name}</option>
-							        )}
-							      </select>
-							    </div>
-
+			 
 									<button className="btn btn-outline-indigo btn-rounded" type="submit" disabled={btn.disabled} data-toggle="modal" data-target="#alertModal">{btn.label}</button>
-									<Link className="btn btn-outline-danger" to='/usuarios'>Fechar</Link>
+									<Link className="btn btn-outline-danger" to='/perfis'>Fechar</Link>
 
 								</form>
 							</div>
