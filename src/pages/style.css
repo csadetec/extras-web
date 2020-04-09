@@ -26,7 +26,8 @@
 }
 
 .cursor-pointer:hover {
-    background-color: #5ce1001c;
+    background-color: #ddd;
+    transition:  .5s;
 }
 /*
 .img-icon {

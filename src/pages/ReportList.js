@@ -26,7 +26,15 @@ function ReportList() {
 
     date = `${yaer}-${month}-${day}`
 
+
     setDate({ start: date, end: date })
+
+    async function load(){
+      const { data } = await api.get(`/services/employees/${date}/${date}`)
+      setReports(data)
+      //console.log(date)
+    }
+    load()
 
   }, [])
 
@@ -171,6 +179,10 @@ function ReportList() {
               <strong>Colaboradores e seus serviços</strong>
             </h5>
             <div className="card-body pt-0">
+            {reports.length === 0 ?
+              <h4 style={{marginTop:10}}>Sem registro</h4> 
+            :
+            
               <table className="table">
                 <thead>
                   <tr>
@@ -200,6 +212,7 @@ function ReportList() {
                   )}
                 </tbody>
               </table>
+            }
             </div>
 
           </div>

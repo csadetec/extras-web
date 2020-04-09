@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const [servicos, setServicos] = useState('nav-item')
   const [relatorios, setRelatorios] = useState('nav-item')
-  const [teste, setTeste] = useState('nav-item')
+  //const [teste, setTeste] = useState('nav-item')
   /*
   const [usuarios, setUsuarios] = useState('nav-item')
   const [colaboradores, setColaboradores] = useState('nav-item')
@@ -31,7 +31,7 @@ const Navbar = () => {
     setHome('nav-item')
     setServicos('nav-item')
     setRelatorios('nav-item')
-    setTeste('nav-item')
+    //setTeste('nav-item')
     /*
     setUsuarios('nav-item')
     setColaboradores('nav-item')
@@ -46,7 +46,7 @@ const Navbar = () => {
 
     if(pathname === '/home')
       return setHome('nav-item active')
-    
+    /*
     if (pathname === '/teste')
       return setTeste('nav-item active')
 /*
@@ -73,14 +73,14 @@ const Navbar = () => {
             <li className={relatorios}>
               <Link className="nav-link" to="/relatorios">Relatórios</Link>
             </li>
-            
+            {/*}
             <li className={teste}>
               <Link className="nav-link" to="/teste">teste pdf</Link>
             </li>
-       
+            */}
             <li className="nav-item dropdown">
-              <div className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false" >{logged.name} | {logged.profile_name}</div>
+              <div className="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" style={{cursor:'pointer'}}  >{logged.name} | {logged.profile_name}</div>
               <div className="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                 <Link className="dropdown-item" to="/usuarios" onClick={handleActive}  >Usuários</Link>
                 <Link className="dropdown-item" to="/colaboradores" onClick={handleActive}  >Colaboradores</Link>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { /*useState,*/ useEffect } from 'react'
 import api from '../service/api'
 import {formatDate} from '../utils/helpers'
 
@@ -10,7 +10,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 function ReportList() {
-  const [reports, setReports] = useState([])
+  //const [reports, setReports] = useState([])
 
   useEffect(() => {
     document.title = 'teste de pdf'

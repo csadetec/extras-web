@@ -417,7 +417,7 @@ const ServiceForm = (props) => {
 									<table className="" style={{width:'100%', borderCollapse:'collapse' }} >
 										<tbody>
 											{service.employees.map(r =>
-												<tr key={r.id} title={r.name} style={{cursor:'pointer'}}  >
+												<tr key={r.id} title={r.name} className="cursor-pointer"  >
 													<td onDoubleClick={() => handleDelEmployee(r.id)} style={td}
                             title={title(r)}	>
 														<img style={{width:49, borderRadius:50, height:46}} 
