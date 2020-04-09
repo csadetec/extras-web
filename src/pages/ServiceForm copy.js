@@ -296,17 +296,7 @@ const ServiceForm = (props) => {
     
 		setService({ ...service, [e.target.name]: e.target.value })
 
-  }
-  
-  const td = {
-    paddingLeft:3,    
-    paddingBottom:15,
-    paddingTop:5,
-    borderBottom: '1px solid #ddd'
-  }
-  const timeStyle = {
-    background:'white', borderRadius:4, padding:2, border:'1px solid #ddd', marginRight:3
-  }
+	}
 	return (
 		<>
 			{loading ?
@@ -410,32 +400,38 @@ const ServiceForm = (props) => {
 						</div>
 						<div className="col-md-6">
 							<div className="card">
-								<h5 className="card-header green white-text text-center  ">
+								<h5 className="card-header green white-text text-center py-2 ">
 									<strong>Colaboradores<i className="fas fa-sync float-right cursor-pointer" title="Sicronizar horário" onClick={handleSyncHours}></i></strong>
 								</h5>
 								<div className="card-body px-lg-2">
-									<table className="" style={{width:'100%', borderCollapse:'collapse' }} >
+									<table className="table">
+                    <thead>
+                      <tr>
+                        {/*}
+                        <th></th>
+                        <th>Natureza</th>
+                        <th>Inicio</th>
+                        <th>Fim</th>
+                        <th>Qtd. Horas</th>
+                  */}
+                      </tr>
+                    </thead>
 										<tbody>
 											{service.employees.map(r =>
-												<tr key={r.id} title={r.name} style={{cursor:'pointer'}}  >
-													<td onDoubleClick={() => handleDelEmployee(r.id)} style={td}
-                            title={title(r)}	>
-														<img style={{width:49, borderRadius:50, height:46}} 
+												<tr key={r.id} title={r.name} className="cursor-pointer" >
+													<td onDoubleClick={() => handleDelEmployee(r.id)}
+														className={`pt-2 pb-0 pr-0`}
+														title={title(r)}	>
+														<img className="img-icon mt-1" 
 															src={`https://visiografo.netlify.com/${r.id}.JPG`} 
 															onError={(e) => {e.target.onerror = null; e.target.src='https://visiografo.netlify.com/generico.png'}}
 															alt={r.name} />
 													</td>
-                          <td style={td}>
-                            {r.name}
-                            <br/>
-                            <sub>
-                              {r.function}
-                            </sub>
-                          </td>
-                          <td style={td}>
-                            {disabled ? r.reason_name
+
+													<td className="pl-0">
+														{!disabled ? r.reason_name
 															:
-															<select name="reason_name"  value={r.reason_name} style={{background:'white', borderRadius:4, padding:2, marginBottom:4}}
+															<select name="reason_name" id="" className="input-employee" value={r.reason_name} 
 																onChange={ e => handleUpdateEmployee(r.id, e) } >
 																<option value="">Motivo</option>
 																{reasons.map(r =>
@@ -443,15 +439,28 @@ const ServiceForm = (props) => {
 																)}
 															</select>
 														}
-                            <br/>
-                            <input type="time"  name="start" value={r.start} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)} />
-                            <input type="time"  name="end" value={r.end} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)} />
-                            <span style={{    background:'white', borderRadius:4, padding:5, border:'1px solid #ddd', marginRight:3}}>
-                              {r.qtd_hours}
-                            </span>
-                         
 													</td>
-                     
+													{disabled ?
+														<td>{r.start} - {r.end}</td>
+														:
+														<>
+															<td className="pl-0">
+																<input type="time" className="input-employee-time" name="start" value={r.start} onChange={e => handleUpdateEmployee(r.id, e)} />
+															</td>
+															<td className="pl-0">
+																<input type="time" className="input-employee-time" name="end" value={r.end} onChange={e => handleUpdateEmployee(r.id, e)} />
+															</td>
+														</>
+													}
+													<td className="pl-0">	{r.qtd_hours}
+                          
+														{/*disabled ? 
+														
+														:
+														{/*<input type="time" className="input-employee-time" value={r.qtd_hours} disabled={true}  /> */}
+
+														
+													</td>
 												</tr>
 											)}
 

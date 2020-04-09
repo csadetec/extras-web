@@ -30,6 +30,8 @@ import EmployeeList from './pages/EmployeeList'
 import ProfileList from './pages/ProfileList'
 import ProfileForm from './pages/ProfileForm'
 
+import Teste from './pages/Teste'
+
 function App() {
   const token = localStorage.getItem('token_extras')
 
@@ -70,7 +72,9 @@ function App() {
             <Route path='/perfis/editar/:id' component={ProfileForm} />
             <Route path='/perfis/cadastrar' component={ProfileForm} />
             
+            <Route exact={true} path='/teste' component={Teste} />
             
+
             {/*<Redirect path='*' to='/' />*/}
             
           </Switch>

@@ -7,7 +7,7 @@ import logout from '../utils/logout'
 import Loading from '../components/Loading'
 import AlertModal from '../components/AlertModal'
 
-import { loadUsers, loadProfiles, loadLogged} from '../utils/load'
+import { loadUsers, loadProfiles} from '../utils/load'
 
 const UserForm = (props) => {
 	/** */

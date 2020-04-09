@@ -11,21 +11,19 @@ export const formatDate = (dateString) => {
   return `${day}/${month}`;	
 }
 
-export const imageExists = (id) => {
-  
-  /*
-  const img =  `https://visiografo.netlify.com/${id}.JPG`
-
-  var http = new XMLHttpRequest()
-  http.open('HEAD', img, false)
-  http.send()
-  if(http.status === 404){
-    return `https://visiografo.netlify.com/generico.png`
+export const formatDateFull = (dateString) => {
+  if(!dateString){
+    return 'INDEFINIDO'
   }
-  
-  return img
-  /** */
+  const date = dateString.split('-')
+  const day = date[2]
+  const month = date[1] 
+  const yaer = date[0]
+
+  return `${day}/${month}/${yaer}`;	
 }
+
+
 
 export const diffHours = (startComplete, endComplete) => {
 		

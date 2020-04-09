@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const [servicos, setServicos] = useState('nav-item')
   const [relatorios, setRelatorios] = useState('nav-item')
+  const [teste, setTeste] = useState('nav-item')
   /*
   const [usuarios, setUsuarios] = useState('nav-item')
   const [colaboradores, setColaboradores] = useState('nav-item')
@@ -30,6 +31,7 @@ const Navbar = () => {
     setHome('nav-item')
     setServicos('nav-item')
     setRelatorios('nav-item')
+    setTeste('nav-item')
     /*
     setUsuarios('nav-item')
     setColaboradores('nav-item')
@@ -44,10 +46,10 @@ const Navbar = () => {
 
     if(pathname === '/home')
       return setHome('nav-item active')
-    /*
-    if (pathname === '/usuarios')
-      return setUsuarios('nav-item active')
-
+    
+    if (pathname === '/teste')
+      return setTeste('nav-item active')
+/*
     if (pathname === '/colaboradores')
       return setColaboradores('nav-item active')
     /** */
@@ -71,15 +73,11 @@ const Navbar = () => {
             <li className={relatorios}>
               <Link className="nav-link" to="/relatorios">Relatórios</Link>
             </li>
-            {/*}
-            <li className={usuarios}>
-              <Link className="nav-link" to="/usuarios">Usuários</Link>
-            </li>
             
-            <li className={colaboradores}>
-              <Link className="nav-link" to="/colaboradores">Colaboradores</Link>
+            <li className={teste}>
+              <Link className="nav-link" to="/teste">teste pdf</Link>
             </li>
-            */}
+       
             <li className="nav-item dropdown">
               <div className="nav-link dropdown-toggle cursor-pointer" id="navbarDropdownMenuLink" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false" >{logged.name} | {logged.profile_name}</div>
