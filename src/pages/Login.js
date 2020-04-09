@@ -40,7 +40,7 @@ function Login() {
       if (!e.response) {
         return setAlert({msg:'Erro no Servidor!', color:'warning'})
       }
-      /*
+      
       let { field } = e.response.data[0]
       console.log(field)
 
@@ -73,7 +73,7 @@ function Login() {
 
                 <div className="md-form">
                   <input type="text" name="email" id="email" className="form-control" 
-                    placeholder='Email'
+                    placeholder='E-mail'
                     value={loggin.email} onChange={updateField} autoFocus required />
                     {loggin.email &&
                       <label htmlFor="email" >E-mail</label>
@@ -84,12 +84,12 @@ function Login() {
                 <div className="md-form">
                   <input type="password" id="password" name="password" className="form-control" 
                     placeholder="Senha" 
-                    value={loggin.password} onChange={updateField} />
+                    value={loggin.password} onChange={updateField} required />
                   {loggin.password &&
                     <label htmlFor="password">Senha</label>
                   }
                 </div>
-                <button disabled={btnStatus} className="btn btn-outline-success btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                <button disabled={btnStatus} className="btn btn-outline-success btn-rounded btn-block" type="submit">
                   {btnLabel}
                 </button>
               </form>
