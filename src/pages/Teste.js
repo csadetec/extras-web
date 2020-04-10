@@ -1,107 +1,46 @@
-import React, { /*useState,*/ useEffect } from 'react'
-import api from '../service/api'
-import {formatDate} from '../utils/helpers'
+import React, {useState} from 'react'
 
+import {Button, Modal} from 'react-bootstrap'
+function Example() {
+  const [show, setShow] = useState(true);
 
-const pdfMake = require('pdfmake/build/pdfmake.js');
-const pdfFonts = require('pdfmake/build/vfs_fonts.js');
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
-function ReportList() {
-  //const [reports, setReports] = useState([])
-
-  useEffect(() => {
-    document.title = 'teste de pdf'
-    async function load(){  
-      
-      const {data} = await api.get('/reports')
-
-      let sourceData = data
-
-      let bodyData = []
-
-      let dataRow = []
-    
-      dataRow.push('Nome', 'Motivo', 'Data', /*'Início', 'Fim',*/' QTD. Horas')
-
-
-      bodyData.push(dataRow)
-      /**/
-      sourceData.forEach(function (sourceData) {
-        let dataRow = []
-
-        dataRow.push(sourceData.employee.name + ' | ' + sourceData.employee.id)
-        dataRow.push(sourceData.reason_name)
-        dataRow.push(formatDate(sourceData.date))
-        /*
-        dataRow.push(sourceData.start)
-        dataRow.push(sourceData.end)
-        /**/
-        dataRow.push(sourceData.qtd_hours)
-
-        bodyData.push(dataRow)
-
-      })
-      const docDefinition = {
-
-        content: [
-          // optional
-          { text: 'Relatório dos serviços extras', style: { fontSize: 20 } },
-          {text:'Perído: 04/05/2020 à 04/06/2020', margin:[0, 10, 0, 10]},
-          {
-            layout: {
-
-              hLineWidth: function (i, node) {
-                if (i === 0 || i === node.table.body.length) {
-                  return 0;
-                }
-                return (i === node.table.headerRows) ? 2 : 1;
-              },
-              vLineWidth: function (i) {
-                return 0;
-              },
-              hLineColor: function (i) {
-                return i === 1 ? 'black' : '#aaa';
-              },
-              paddingTop: (i, node) => 7,
-              paddingBottom: (i, node) => 7,
-              //paddingRight: (i, node) => 10,
-     
-            },
-             
-            table: { headerRows: 1, body: bodyData },
-            style:{fontSize:9}
-          
-          },
-          {text:'Assinatura:', margin:[0, 20, 0, 0 ]},
-          {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 250, y2: 5, lineWidth: 0.4 }]}
-    
-        ]
-      }
-
-
-    pdfMake.createPdf(docDefinition).open();
-
-
-    }
-    load()
-    
-
-
-  }, [])
-
-
-
+  const headerStyle = {
+    background:'#fb3',  color:'#fff',
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)',
+    border:0
+  }
 
   return (
-    <div className="container-fluid " >
-      <h2>teste do pdf</h2>
-    </div>
+    <>
+      <Button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </Button>
 
+      <Modal variant="warning" show={show} onHide={handleClose}>
+        <Modal.Header style={headerStyle} variant="warning" closeButton>
+          <Modal.Title style={{fontSize:'1.15em'}}>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{textAlign:'center'}} >
+          <i className="fas fa-check fa-4x mb-3 animated rotateIn" style={{color:'#fb3'}}></i>
+          <p style={{color:'#616161'}}>
+            Woohoo, you're reading this text in a modal!
 
-  )
+          </p>
+        </Modal.Body>
+        <Modal.Footer style={{justifyContent:'center'}}>
+          <Button variant="warning" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="outline-warning" onClick={handleClose}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 }
 
-export default ReportList
+export default Example

@@ -236,8 +236,6 @@ const ServiceForm = (props) => {
 
     setService({...service, employees:myEmployees})
 
-    
-
   }
 
   async function handleDuplicate(){
@@ -331,7 +329,7 @@ const ServiceForm = (props) => {
 					</div>
 					<div className="row">
 
-						<div className="col-md-6">
+						<div className="col-md-6 mb-3">
 							<div className="card">
 								<h5 className="card-header green white-text text-center py-2">
 									<strong>Informações do Serviço
@@ -433,19 +431,16 @@ const ServiceForm = (props) => {
                             </sub>
                           </td>
                           <td style={td}>
-                            {disabled ? r.reason_name
-															:
-															<select name="reason_name"  value={r.reason_name} style={{background:'white', borderRadius:4, padding:2, marginBottom:4}}
-																onChange={ e => handleUpdateEmployee(r.id, e) } >
-																<option value="">Motivo</option>
-																{reasons.map(r =>
-																	<option key={r.id} value={r.name}>{r.name}</option>
-																)}
-															</select>
-														}
+														<select name="reason_name"  value={r.reason_name} style={{background:'white', borderRadius:4, padding:2, marginBottom:4}}
+															onChange={ e => handleUpdateEmployee(r.id, e) } disabled={disabled} >
+															<option value="">Motivo</option>
+															{reasons.map(r =>
+																<option key={r.id} value={r.name}>{r.name}</option>
+															)}
+														</select>
                             <br/>
-                            <input type="time"  name="start" value={r.start} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)} />
-                            <input type="time"  name="end" value={r.end} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)} />
+                            <input type="time"  name="start" value={r.start} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)}  disabled={disabled}/>
+                            <input type="time"  name="end" value={r.end} style={timeStyle} onChange={e => handleUpdateEmployee(r.id, e)} disabled={disabled}/>
                             <span style={{    background:'white', borderRadius:4, padding:5, border:'1px solid #ddd', marginRight:3}}>
                               {r.qtd_hours}
                             </span>

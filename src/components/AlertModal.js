@@ -1,7 +1,7 @@
 import React from 'react'
 import {formatDate} from '../utils/helpers'
 
-function AlertModal({ color, message, text, employee }) {
+function AlertModal({ color, message, txt, employee }) {
 
   //const users = useState(localStorage.getItem(users))
 
@@ -22,7 +22,7 @@ function AlertModal({ color, message, text, employee }) {
             <div className="modal-body">
               <div className="text-center">
                 {color === 'success' &&
-                  <i className="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                  <i className="fas fa-check fa-4x mb-3 animated rotateIn "></i>
                 }
                 {color === 'warning' &&
                   <i className="fas fa-ban fa-4x mb-3 animated rotateIn"></i>
@@ -35,6 +35,11 @@ function AlertModal({ color, message, text, employee }) {
                     <strong>Horário:</strong> {employee.start} às {employee.end}
                   </p>
                 }
+                
+                {txt && txt.map( r => 
+                  <p key={r}>{r}</p> 
+                )}
+                
               </div>
             </div>
 
