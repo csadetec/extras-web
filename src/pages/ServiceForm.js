@@ -379,7 +379,7 @@ const ServiceForm = (props) => {
 
 											</div>
 										</div>
-										{!disabled &&
+										{!disabled && service.reason_name && service.date && service.start && service.end  &&
 
 											<div className="md-form mb-2">
 												<input className="form-control form-control-lg" type="search" autoComplete="off" placeholder="Pesquisar Colaborador" list="employeeSearch"

@@ -11,6 +11,7 @@ function Home() {
       <p>
         Aplicação para gerenciar horas extras
       </p>
+      <p>teste </p>
     
     </div>
 
